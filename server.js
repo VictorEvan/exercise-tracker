@@ -98,6 +98,7 @@ app.get('/api/exercise/log', (req, res) => {
   if (!userId) res.json({error: 'userId required'});
   User.findOne({"_id": {$regex: '^' + userId}})
     .exec(function(err,doc) {
+      if (!doc) return res.json({error: 'user not found'});
       if (err) return console.error(err);
       let logResponse = doc.log;
       if (from) {
